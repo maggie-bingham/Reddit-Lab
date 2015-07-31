@@ -7,6 +7,7 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Url</th>
       <th>User</th>
@@ -14,19 +15,31 @@
     </tr>
   </thead>
 
-  <tbody>
+
+<div class="container-fluid">
+  <div class="row">
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= post.url %></td>
-        <td>Submitted <%= time_ago_in_words(post.created_at) %> by <%= post.user.name %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <ul class="btn-group">
+          <li><%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
+            <span class="glyphicon glyphicon-chevron-up"></span>
+              Upvote
+            <%= post.get_upvotes.size %>
+          <% end %></li>
+          <li><%= post.get_upvotes.size - post.get_downvotes.size %></li>
+          <li><%= link_to dislike_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
+            <span class="glyphicon glyphicon-chevron-down">
+              Downvote
+          <%= post.get_downvotes.size %>
+          <% end %></li>
+      </ul>
+      <ul>
+        <li><h1><a href="<% post.url %>"><%= post.title %></a></h1></li>
+        <li><h4>Submitted <%= time_ago_in_words(post.created_at) %> by <%= post.user.name %></h4></li>
+        <li><h6><%= link_to 'Show', post %><%= link_to 'Edit', edit_post_path(post) %></h6></li>
+      </ul>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
 <br>
 
