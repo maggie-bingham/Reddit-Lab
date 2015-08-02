@@ -1,2 +1,21 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+#vote_counter {
+  padding: 0;
+  margin: 0;
+
+}
+
+#vote_counter li {
+  list-style-type: none;
+}
+
+#post_descript {
+  padding: 0;
+  margin: 0;
+}
+
+#post_descript li {
+  list-style-type: none;
+}

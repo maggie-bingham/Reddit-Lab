@@ -2,39 +2,37 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Posts</h1>
-
-<div class="container-fluid">
-  <% @posts.each do |post| %>
-    <div class="row">
-      <div class="btn-group span4">
-        <ul>
+<h1>What's Hot</h1>
+<% @posts.each do |post| %>
+<div class="link row clearfix container">
+  <ul class="list-unstyled list-inline">
+    <li>
+      <div class="btn-group text-center">
+        <ul class="list-unstyled">
           <li>
             <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
               <span class="glyphicon glyphicon-chevron-up"></span>
-                <% post.get_upvotes.size %>
+              <% post.get_upvotes.size %>
             <% end %>
           </li>
           <li><%= post.get_upvotes.size - post.get_downvotes.size %></li>
           <li>
             <%= link_to dislike_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
               <span class="glyphicon glyphicon-chevron-down">
-                <% post.get_downvotes.size %>
+              <% post.get_downvotes.size %>
             <% end %>
           </li>
+          <li><br></li>
+          <li><br></li>
         </ul>
       </div>
-      <div class="span8">
-        <ul>
-          <li><h1><a href="<% post.url %>"><%= post.title %></a></h1></li>
-          <li><h4>Submitted <%= time_ago_in_words(post.created_at) %> by <%= post.user.name %></h4></li>
-          <li><h6><%= link_to 'Show', post %></li>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+    </li>
+    <li>
+      <h2>
+        <%= link_to post.title, post %><br>
+        <small class="author"> Submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %></small>
+      </h2>
+    </li>
+  </ul>
 </div>
-
-<br>
-
-<%= link_to 'New Post', new_post_path %>
+<% end %>
