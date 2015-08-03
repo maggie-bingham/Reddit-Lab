@@ -5,13 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user_list = [
-  [ "John Doe", "jdoe@example.com", "123456789", "123456789"],
-  [ "Joe smith", "jsmith@example.com", "123456789", "123456789"],
-  [ "Max Bingham", "mbingham@example.com", "123456789", "123456789"],
-  [ "Tom Minyar", "tminyard@example.com", "123456789", "123456789"]
-]
-
-user_list.each do |name, email, password, password_confirmation|
-  User.create( name: name, password: password, password_confirmation: password_confirmation)
-end
+user1 = User.create :name => "User1", :email => "user1@example.com", :password => "user123"
+user2 = User.create :name => "User2", :email => "user2@example.com", :password => "user123"
+user3 = User.create :name => "User3", :email => "user3@example.com", :password => "user123"
+user4 = User.create :name => "User4", :email => "user4@example.com", :password => "user123"
