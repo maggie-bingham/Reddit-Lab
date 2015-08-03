@@ -1,9 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 
-  <div class="btn-group">
-      <li><%= @post.get_upvotes.size - @post.get_downvotes.size %></li>
-  </div>
+<p>
+  <strong>Votes:</strong>
+  <%= @post.get_upvotes.size - @post.get_downvotes.size %>
+</p>
 
 <p>
   <strong>Title:</strong>
@@ -12,7 +13,7 @@
 
 <p>
   <strong>Url:</strong>
-  <%= @post.url %>
+  <a href="<%@post.url%>"><%= @post.url %>
 </p>
 
 <p>
@@ -25,6 +26,6 @@
 	<div class="btn-group">
 		<%= link_to 'Back', :back, class: "btn btn-default" %>
     <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-default" %>
-		<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+		<%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
 	</div>
 <% end %>
