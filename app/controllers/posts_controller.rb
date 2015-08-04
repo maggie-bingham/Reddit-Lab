@@ -10,7 +10,7 @@ class PostsController < ApplicationController
       @subreddit = Subreddit.where(:name => params[:subreddit_id])
       @posts = @subreddit.posts.all
     else
-      @posts = Post.all
+      @posts = Post.order("cached_votes_up DESC").all
     end
   end
 
