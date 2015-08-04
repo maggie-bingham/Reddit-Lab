@@ -6,7 +6,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    if params[:subreddit_id]
+      @subreddit = Subreddit.where(:name => params[:subreddit_id])
+      @posts = @subreddit.posts.all
+    else
+      @posts = Post.all
+    end
   end
 
   # GET /posts/1
@@ -87,11 +92,11 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :url, :user_id)
+      params.require(:post).permit(:title, :url, :summary, :user_id)
     end
 
     def authorized_user
-      @post = current_user.links.find_by(id: params[:id])
-      redirect_to links_path, notice: "Not authorized to edit this link" if @post.nil?
+      @post = current_user.post.find_by(id: params[:id])
+      redirect_to posts_path, notice: "Not authorized to edit this link" if @post.nil?
     end
 end

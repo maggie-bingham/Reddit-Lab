@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :subreddits do
+    resources :posts
+  end
   devise_for :users
   resources :posts do
     member do
