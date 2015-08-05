@@ -32,7 +32,7 @@
         <li>
           <div class="span8">
             <ul class="list-unstyled">
-              <li><h3><a href="<% post.url %>"><%= post.title %></a></h3></li>
+              <li><h3><%= link_to post.title, link_redirect_path(post) %></h3></li>
               <li><%= post.summary %></li>
               <li><h5>Submitted <%= time_ago_in_words(post.created_at) %> ago by <em><%= post.user.name %></em></h5></li>
               <li>

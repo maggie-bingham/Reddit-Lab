@@ -8,15 +8,16 @@ class PostsController < ApplicationController
   def index
     if params[:subreddit_id]
       @subreddit = Subreddit.where(:name => params[:subreddit_id])
-      @posts = @subreddit.posts.all
+      @posts = @subreddit.posts.order(:cached_votes_up => :desc)
     else
-      @posts = Post.order("cached_votes_up DESC").all
+      @posts = Post.order(:cached_votes_up => :desc)
     end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @comment = Comment.new
   end
 
   # GET /posts/new
@@ -78,6 +79,12 @@ class PostsController < ApplicationController
     @post= Post.find(params[:id])
     @post.downvote_by current_user
     redirect_to :back
+  end
+
+  def redirect
+    @post = Post.find(params[:id])
+    @post.upvote_by current_user
+    redirect_to @post.url
   end
 
   private

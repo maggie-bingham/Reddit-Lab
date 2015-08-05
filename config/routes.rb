@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :subreddits do
     resources :posts
   end
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
       put 'dislike', to: "posts#downvote"
     end
   end
+
+  get 'posts/:id/redirect' => 'posts#redirect', :as => :link_redirect
 
   root 'posts#index'
 
