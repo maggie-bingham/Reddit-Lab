@@ -69,6 +69,6 @@ class SubredditsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subreddit_params
-      params[:subreddit]
+      params.require(:subreddit).permit(:name)
     end
 end
