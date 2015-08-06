@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
   has_many  :posts
   has_many  :comments
 
+  has_many :self_comments, :as => :commentable, :class_name => Comment
+  
 end

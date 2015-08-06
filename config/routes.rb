@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources :comments
+  devise_for :users
   resources :subreddits do
     resources :posts
   end
-  devise_for :users
   resources :posts do
     member do
       put 'like', to: "posts#upvote"
