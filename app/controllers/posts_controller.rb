@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, :except => [:index, :show]
-  before_action :user_select, only: [:new, :edit, :update, :create]
+  before_action :set_subreddit_options, only: [:new, :edit, :update, :create]
 
   # GET /posts
   # GET /posts.json
   def index
     if params[:subreddit_id]
-      @subreddit = Subreddit.where(:name => params[:subreddit_id])
+      @subreddit = Subreddit.where(:name => params[:subreddit_id]).first
       @posts = @subreddit.posts.order(:cached_votes_up => :desc)
     else
       @posts = Post.order(:cached_votes_up => :desc)
@@ -33,10 +33,11 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to posts_path, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -93,17 +94,13 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
-    def user_select
-      @user_options = User.all.collect{ |user| [user.name, user.id] }
+    def set_subreddit_options
+      @subreddit_options = Subreddit.all.collect{ |subreddit| [subreddit.name, subreddit.id] }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :url, :summary, :user_id)
+      params.require(:post).permit(:title, :url, :summary, :subreddit_id)
     end
 
-    def authorized_user
-      @post = current_user.post.find_by(id: params[:id])
-      redirect_to posts_path, notice: "Not authorized to edit this link" if @post.nil?
-    end
 end
